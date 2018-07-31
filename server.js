@@ -9,7 +9,7 @@ mongoose.connect(process.env.MLAB_URI || 'mongodb://localhost/exercise-track' )
 
 
 const userSchema = new mongoose.Schema({
-  name: { type: String, required: true },
+  username: { type: String, required: true },
 });
 const exerciseSchema = new mongoose.Schema({
   username: String,
@@ -34,9 +34,13 @@ app.get('/', (req, res) => {
 });
 
 app.post('/api/exercise/new-user', (req, res) => {
-  const username = req.body.username;
-  
+  User.create({ username: req.body.username }, (err, user) => {
+    res.json(user);
+  });
 });
+
+app.post('/api/exercise/add', (req, res) => {
+  User.findById({ 
 
 
 // Not found middleware
