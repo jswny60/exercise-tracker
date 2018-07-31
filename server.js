@@ -64,13 +64,13 @@ app.get('/api/exercise/log', (req, res) => {
     }
     let query = Exercise.find({ username: user.username });
     if (req.query.from !== undefined) {
-      query = query.where('date').ge(req.query.from);
+      query = query.where('date').gte(req.query.from);
     }
     if (req.query.to !== undefined) {
-      query = query.where('date').le(req.query.to);
+      query = query.where('date').lte(req.query.to);
     }
     if (req.query.limit !== undefined) {
-      query = query.limit(req.query.limit);
+      query = query.limit(parseInt(req.query.limit));
     }
     query.exec((err, exercises) => {
       res.json(exercises);
