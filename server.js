@@ -40,7 +40,24 @@ app.post('/api/exercise/new-user', (req, res) => {
 });
 
 app.post('/api/exercise/add', (req, res) => {
-  User.findById({ 
+  User.findById(req.body.userId, (err, user) => {
+    Exercise.create({
+      username: user.username,
+      description: req.body.description,
+      duration: req.body.duration,
+      date: new Date(req.body.date),
+    }, (err, exercise) => {
+      res.json(exercise);
+    });
+  });
+});
+
+app.get('/api/exercise/log', (req, res) => {
+  if (!req.query.userId) {
+    res.status = 400;
+    res.end();
+  }
+  
 
 
 // Not found middleware
