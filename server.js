@@ -11,7 +11,6 @@ mongoose.connect(process.env.MLAB_URI || 'mongodb://localhost/exercise-track' )
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
 });
-
 const exerciseSchema = new mongoose.Schema({
   username: String,
   description: String,
@@ -19,6 +18,8 @@ const exerciseSchema = new mongoose.Schema({
   date: Date,
 });
 
+const User = mongoose.model('User', userSchema);
+const Exercise = mongoose.model('Exercise', exerciseSchema);
 
 
 app.use(cors())
