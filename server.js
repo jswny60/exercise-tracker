@@ -57,7 +57,26 @@ app.get('/api/exercise/log', (req, res) => {
     res.status = 400;
     res.end();
   }
-  
+  User.findById(req.query.userId, (err, user) => {
+    if (err) {
+      res.status = 400;
+      return res.end();
+    }
+    let query = Exercise.find({ username: user.username });
+    if (req.query.from !== undefined) {
+      query = query.where('date').ge(req.query.from);
+    }
+    if (req.query.to !== undefined) {
+      query = query.where('date').le(req.query.to);
+    }
+    if (req.query.limit !== undefined) {
+      query = query.limit(req.query.limit);
+    }
+    query.exec((err, exercises) => {
+      res.json(exercises);
+    });
+  });
+});
 
 
 // Not found middleware
