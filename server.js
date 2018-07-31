@@ -9,7 +9,14 @@ mongoose.connect(process.env.MLAB_URI || 'mongodb://localhost/exercise-track' )
 
 
 const userSchema = new mongoose.Schema({
-  
+  name: { type: String, required: true },
+});
+
+const exerciseSchema = new mongoose.Schema({
+  username: String,
+  description: String,
+  duration: Number,
+  date: Date,
 });
 
 
